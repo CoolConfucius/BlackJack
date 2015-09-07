@@ -114,6 +114,7 @@ function standClick(event){
 	stand = true; 
 	player2AI(hand2, deck, true);
 	isWin(hand1, hand2, soft);
+	var points = countHand(hand1, soft); 
 	$hand1.text(hand1.toString());
 	$hand2.text(hand2.toString());
 	$points.text(points.toString());
