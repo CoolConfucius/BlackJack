@@ -1,3 +1,5 @@
+// Cade: There shouldn't be a toggle in Black Jack. Aces are eleven by default and their value goes to one when the total points is over 21. Think of omething so that the points subtract by 10 if total is over 21. 
+
 // var _ = require('lodash');
 // var _ = require('jQuery');
 $(document).ready(init);
@@ -35,148 +37,186 @@ function shuffle(deck) {
   return deck;
 }
 
-var controlledShuffle = function(deck){
-	var half1 = deck.splice(0, 26); 
-	var half2 = deck; 
-	var half11 = half1.splice(0, 13); 
-	var half12 = half1; 
-	var half21 = half2.splice(0, 13); 
-	var half22 = half2; 
-	half11.reverse();
-	half12.reverse();
-	half21.reverse();
-	half22.reverse();
-	return half22.concat(half11, half21, half12); 
-}; 
-var aceDeck = ['A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663'];  
+var aceDeck = ['J\u2663', 'J\u2663', 'J\u2663', 'J\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663'];  
+var bjTieStart = ['A\u2663', 'J\u2663', 'A\u2663', 'J\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663'];
+var bjWinStart = ['A\u2663', 'J\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663'];
+var bjLoseStart = ['A\u2663', 'A\u2663', 'A\u2663', 'J\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663'];
+var bjTie = ['5\u2663', '6\u2663', '5\u2663', '6\u2663', 'J\u2663', 'J\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663'];
+var bjWin = ['5\u2663', '6\u2663', '5\u2663', '6\u2663', 'J\u2663', '3\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663'];
+var bjLose = ['5\u2663', '6\u2663', '5\u2663', '6\u2663', '3\u2663', 'J\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663']
+var bustTie = ['8\u2663', '8\u2663', '8\u2663', '8\u2663', '9\u2663', '9\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663']
+var bustLose = ['8\u2663', '8\u2663', '8\u2663', '8\u2663', '9\u2663', '2\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663']
+
+
+
 
 //deck = controlledShuffle(deck); 
 deck = shuffle(deck); 
 // deck = _.shuffle(deck);
+// deck = aceDeck; 
+// deck = bjTieStart; 
+// deck = bjWinStart; 
+deck = bjLose; 
 
-var soft = false; 
 var hit = false; 
 var hand1 = [];
 var hand2 = []; 
 var stand = false; 
 var gameOver = false; 
-
+var started = false; 
 
 
 function init() {
 	$('#start').click(startClick); 
 	$('#hit').click(hitClick); 
 	$('#stand').click(standClick); 
-	$('#soft').click(softClick); 
 	$('#restart').click(restartClick); 
 };
 
 function startClick(event){
 	console.log(deck); 
+	if (!started) {
+	started = true; 
 	var $hand1 = $('#hand1');
 	var $hand2 = $('#hand2');
 	var $points = $('#points');
+	var $points2 = $('#points2');
+	var $win = $('#win');
 	starter(hand1, deck);
 	starter(hand2, deck);
-	var points = countHand(hand1, soft); 
+	var points = softHard(hand1); 
+	var points2 = softHard(hand2); 
+	var message = '';
+	if (points === 21 && points2 === 21) {
+		message = "You both got Black Jacks at the start!";
+	} else if (points === 21) {
+		message = "You got a Black Jack at the start! You win!";
+	} else if (points2 === 21){
+		message = "Player 2 got a Black Jack at the start! You lose!";
+	}
+	
+
 	$hand1.text(hand1.toString());
 	$hand2.text(hand2.toString());
 	$points.text(points.toString());
+	$points2.text(points2.toString());
+	$win.text(message); 
+	};
+};
+
+function comparePoints(points, points2){
+	console.log("Yes?");
+	return points > points2 ? "You have more points! You win!" : "Player 2 has more points than you! You lose!";
+}; 
+
+function standResult(points2){
+	console.log("Stand results!")
+	if (points2 === 21) {
+		return 'Player 2 has a Black Jack! You lose!';
+	} else {
+		if (points2 > 21) {
+			return 'Player 2 got busted! You win!';
+		} else {
+			var points = softHard(hand1); 
+			return comparePoints(points, points2, message); 
+		}	
+	}
+	console.log("Player 2:", points2, message)
 };
 
 function hitClick(event){
-	if (!gameOver) {
+	if (!gameOver && started) {
 	var $hand1 = $('#hand1');
 	var $hand2 = $('#hand2');
 	var $points = $('#points');
+	var $points2 = $('#points2');
 	var $win = $('#win');
 	var message = ''; 
 	deal(hand1, deck);
 	player2AI(hand2, deck, false);
-	var points = countHand(hand1, soft); 
+	var points = softHard(hand1); 
+	var points2 = softHard(hand2); 
+	
+	if (points >= 21 || points2 >= 21 ) {
+		gameOver = true; 
+	}
+	console.log(points, points2); 
+	if (points === 21 && points2 === 21) {
+		console.log("a tie!"); 
+		message = "You both got Black Jacks!"; 
+	} else if (points === 21) { 
+		message = "You got a Black Jack!"; 
+	} else if (points2 === 21) {
+		message = "Player 2 has a Black Jack! You lose!";
+	} else {
+			if (points > 21 && points2 > 21) {
+				message = "You both got Busted!"; 
+			} else if (points > 21) { 
+				message = "You got Busted!"; 
+			} else if (points2 > 21) {
+				message = "Player 2 got Busted! You win!";
+			}	else {
+				message = comparePoints(points, points2); 
+			}
+	}
+	
+	
+
+
 	$hand1.text(hand1.toString());
 	$hand2.text(hand2.toString());
 	$points.text(points.toString());
-	
-	if (over21(hand1)) { 
-		gameOver = true; 
-		$win.text('Busted!'); 
-	};
+	$points2.text(points2.toString());
+	$win.text(message); 
 	};
 };
 
 function standClick(event){
-	if (!gameOver) {
-	var $hand1 = $('#hand1');
+	if (!gameOver && started) {
 	var $hand2 = $('#hand2');
 	var $points = $('#points');
+	var $points2 = $('#points2');
 	var $win = $('#win');
+	var message = '';
 	stand = true; 
 	player2AI(hand2, deck, true);
-	isWin(hand1, hand2, soft);
-	var points = countHand(hand1, soft); 
-	$hand1.text(hand1.toString());
+	var points2 = softHard(hand2); 
+	message = standResult(points2); 
+	
 	$hand2.text(hand2.toString());
-	$points.text(points.toString());
-	if (isWin(hand1, hand2, soft)) {
-		gameOver = true; 
-		message = "you win!";
-	} else {
-		gameOver = true; 
-		message = "you lose!";
-	};
+	$points2.text(points2.toString());
 	$win.text(message);
 	};
-};
-
-function softClick(event){
-	var $hand1 = $('#hand1');
-	var $win = $('#win');
-	var $soft = $('#soft');
-	var $points = $('#points');
-	var message = 'Hard to soft'; 
-	
-	if (soft) {
-		message = "Soft to hard"; 
-		soft = false;
-	} else {
-		soft = true;
-	};
-	var points = countHand(hand1, soft); 
-	$hand1.text(hand1.toString());
-	$soft.text(message);
-	$points.text(points.toString());
 };
 
 function restartClick(event){
 	var $hand1 = $('#hand1');
 	var $hand2 = $('#hand2');
 	var $win = $('#win');
-	var $soft = $('#soft');
 	var $points = $('#points');
+	var $points2 = $('#points2');
 	$hand1.text('empty hand');
 	$hand2.text('empty hand');
-	$soft.text('Hard to soft');
 	$points.text('0');
+	$points2.text('0');
 	$win.text('');
 	reset(); 
 }
 
-function player2AI(hand2, deck, stand){
+function player2AI(hand2, deck, stand){	
 	if (stand){
-		while( countHand(hand2, false) <= 17 ){
+		while( softHard(hand2) <= 17 ){
 			deal(hand2, deck);
 		}
 	} else {
-		if (countHand(hand2, false) <= 17) {
+		if ( softHard(hand2) <= 17) {
 			deal(hand2, deck);	
 		};
 	};
 };
 
 
-var countHand = function(hand, soft){
-	var ace = false;
+var countHand = function(hand){
 	var points = hand.reduce(function(sum, element){
 		var rank = element.split('')[0]; 
 		switch (rank){
@@ -185,13 +225,10 @@ var countHand = function(hand, soft){
 			case 'K': 
 				sum += 10; 
 				break; 
-			case 'A': //take soft into consideration
-				if (!ace) {
-					soft ? sum += 11 : sum += 1; 
-					ace = true; 	
-				} else sum += 1; 	
+			case 'A': 
+				sum += 11 
 				break; 
-			case '1': //handling 10s. keep in mind that 10 is two digits 
+			case '1': 
 				sum += 10; 
 				break; 
 			default: 
@@ -201,6 +238,29 @@ var countHand = function(hand, soft){
 	}, 0);
 	return points; 
 }; 
+
+var getAces = function(hand){
+	var aces = hand.reduce(function(sum, element){		
+		if (element.split('')[0] === 'A') {
+			sum += 1; 
+		};
+		return sum; 
+	}, 0);
+	return aces; 
+};
+
+var softHard = function(hand){
+ var points = countHand(hand); 
+ 	if (points > 21) {
+		var aces = getAces(hand); 
+		while (points > 21 && aces > 0){
+			aces -= 1; 
+			points -= 10; 
+		}
+ 	};
+ 	return points; 
+}; 
+
 
 var deal = function(hand, deck){
 	hand.push(deck[0]); 
@@ -212,21 +272,6 @@ var starter = function(hand, deck){
 	deal(hand, deck);	
 };
 
-var over21 = function(hand){
-	return countHand(hand, false) > 21 
-}; 
-
-var isWin = function(hand1, hand2, soft){
-	var points1 = countHand(hand1, soft); 
-	var points2 = countHand(hand2, false); 
-	if (points1 === 21) { return true };
-	if (points2 === 21) { return false };
-	if (points1 > 21) { return false};
-	if (points2 > 21) { return true};
-	if (points1 >= points2 ) {return true};
-	if (points2 >= points1 ) {return false};
-	return true; 
-};
 
 var reset = function(){
 	deck = []; 
@@ -239,11 +284,11 @@ var reset = function(){
 		});
 	});
 	deck = shuffle(deck); 
-	soft = false; 
   hit = false; 
   hand1 = [];
   hand2 = []; 
   stand = false; 
   gameOver = false; 
+  started = false; 
 }; 
 
