@@ -48,7 +48,7 @@ var controlledShuffle = function(deck){
 	half22.reverse();
 	return half22.concat(half11, half21, half12); 
 }; 
-
+var aceDeck = ['A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663'];  
 
 //deck = controlledShuffle(deck); 
 deck = shuffle(deck); 
@@ -60,6 +60,8 @@ var hand1 = [];
 var hand2 = []; 
 var stand = false; 
 var gameOver = false; 
+
+
 
 function init() {
 	$('#start').click(startClick); 
@@ -173,6 +175,7 @@ function player2AI(hand2, deck, stand){
 
 
 var countHand = function(hand, soft){
+	var ace = false;
 	var points = hand.reduce(function(sum, element){
 		var rank = element.split('')[0]; 
 		switch (rank){
@@ -182,7 +185,10 @@ var countHand = function(hand, soft){
 				sum += 10; 
 				break; 
 			case 'A': //take soft into consideration
-				soft ? sum += 11 : sum += 1; 
+				if (!ace) {
+					soft ? sum += 11 : sum += 1; 
+					ace = true; 	
+				} else sum += 1; 	
 				break; 
 			case '1': //handling 10s. keep in mind that 10 is two digits 
 				sum += 10; 
