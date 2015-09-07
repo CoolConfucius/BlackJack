@@ -1,11 +1,4 @@
-// Cade: There shouldn't be a toggle in Black Jack. Aces are eleven by default and their value goes to one when the total points is over 21. Think of omething so that the points subtract by 10 if total is over 21. 
-
-// var _ = require('lodash');
-// var _ = require('jQuery');
 $(document).ready(init);
-
-
-// var _ = require('lodash');
 
 var suits = ['\u2663', '\u2662', '\u2660', '\u2661'];
 var ranks = ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K'];
@@ -24,12 +17,8 @@ function shuffle(deck) {
   var temp; 
   var randomIndex;
   while (0 !== currentIndex) {
-
-    // Pick a remaining element...
     randomIndex = Math.floor(Math.random() * currentIndex);
     currentIndex -= 1;
-
-    // And swap it with the current element.
     temp = deck[currentIndex];
     deck[currentIndex] = deck[randomIndex];
     deck[randomIndex] = temp;
@@ -37,26 +26,7 @@ function shuffle(deck) {
   return deck;
 }
 
-var aceDeck = ['J\u2663', 'J\u2663', 'J\u2663', 'J\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663'];  
-var bjTieStart = ['A\u2663', 'J\u2663', 'A\u2663', 'J\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663'];
-var bjWinStart = ['A\u2663', 'J\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663'];
-var bjLoseStart = ['A\u2663', 'A\u2663', 'A\u2663', 'J\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663'];
-var bjTie = ['5\u2663', '6\u2663', '5\u2663', '6\u2663', 'J\u2663', 'J\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663'];
-var bjWin = ['5\u2663', '6\u2663', '5\u2663', '6\u2663', 'J\u2663', '3\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663'];
-var bjLose = ['5\u2663', '6\u2663', '5\u2663', '6\u2663', '3\u2663', 'J\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663']
-var bustTie = ['8\u2663', '8\u2663', '8\u2663', '8\u2663', '9\u2663', '9\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663']
-var bustLose = ['8\u2663', '8\u2663', '8\u2663', '8\u2663', '9\u2663', '2\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663', 'A\u2663']
-
-
-
-
-//deck = controlledShuffle(deck); 
 deck = shuffle(deck); 
-// deck = _.shuffle(deck);
-// deck = aceDeck; 
-// deck = bjTieStart; 
-// deck = bjWinStart; 
-deck = bjLose; 
 
 var hit = false; 
 var hand1 = [];
